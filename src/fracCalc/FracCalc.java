@@ -1,5 +1,6 @@
 package fracCalc;
 
+//Ryan Mathew  
 public class FracCalc {
 
     public static void main(String[] args) 
