@@ -1,6 +1,6 @@
 package fracCalc;
 import java.util.*;
-//Ryan Mathew  
+//Ryan Mathew  - test edit - home computer intellij - 10/11
 public class FracCalc {
 
     public static void main(String[] args) {
