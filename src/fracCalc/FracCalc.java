@@ -5,10 +5,14 @@ public class FracCalc {
 
     public static void main(String[] args) {
         // TODO: Read the input from the user and call produceAnswer with an equation
-    	Scanner input = new Scanner(System.in); 
-    	System.out.print("Enter an expression: ");
-    	String in = input.nextLine();
-        System.out.println(produceAnswer(in));
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter an expression: ");
+        String in = input.nextLine();
+        while (!in.equalsIgnoreCase("quit")) {
+            produceAnswer(in);
+            System.out.print("Enter an expression: ");
+            in = input.nextLine();
+        }
     }
     
     // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
@@ -22,25 +26,48 @@ public class FracCalc {
 
     public static String produceAnswer(String input) {
         // produceAnswer should read the first operand (Ex.: 1/2) and return a float
+        input = input.trim();
         String firstOp = input.substring(0, (input.indexOf(" ")));
         String Operator = input.substring(input.indexOf(" ") + 1, input.indexOf(" ") + 2);
         String secondOp = input.substring(input.indexOf(" ") + 3, input.length());
-        // read Operator and check what it is
-        // last read the last operand and do the same as the first step.
 
-        //do these steps later
-        //Finally execute the actual process to do the math and find the answer
-        //for(int i = 0; i < input.length() - 1; i++) {
+        fractionString(firstOp);
+
+        return fractionString(secondOp);
 
 
         // TODO: Implement this function to produce the solution to the input
-        
-        return secondOp;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
-    //Plan for produceAnswer method
-        //for loop starting from index = 0 thru input.length() - 1
-        //use charAt to view individual characters within the string as the index increases
-        //Check that character is 0-9, _ (underscore) , / (slash), - (negative sign), or a space(" ").
+
+    public static String fractionString(String input) {
+        int x = 0;
+        int y = 0;
+        int z = 1;
+        int wholePosition;
+        int fracSep;
+        wholePosition = input.indexOf('_');
+        fracSep = input.indexOf('/');
+        //if only a whole number exists
+        if ((wholePosition == -1) && (fracSep == -1)) {
+            x = Integer.parseInt(input);
+            y = 0;
+            z = 1;
+        }
+        //if both a whole number and fraction exist
+        if ((wholePosition > 0) && (fracSep > 0)) {
+            x = Integer.parseInt(input.substring(0, wholePosition));
+            y = Integer.parseInt(input.substring(wholePosition + 1, fracSep));
+            z = Integer.parseInt(input.substring(fracSep + 1));
+        }
+        //if only a fraction exists
+        if ((wholePosition == -1) && (fracSep > 0)) {
+            x = 0;
+            y = Integer.parseInt(input.substring(0, fracSep));
+            z = Integer.parseInt(input.substring(fracSep + 1));
+        }
+        return ("whole:" + x + " numerator:" + y + " denominator:" + z);
+    }
 }
+
