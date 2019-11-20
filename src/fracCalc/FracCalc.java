@@ -29,11 +29,23 @@ public class FracCalc {
         input = input.trim();
         String firstOp = input.substring(0, (input.indexOf(" ")));
         String Operator = input.substring(input.indexOf(" ") + 1, input.indexOf(" ") + 2);
+        
+        if (!(input.substring((input.indexOf(" ") + 2),(input.indexOf(" ") + 3))).equals(" ")) {
+        	return "ERROR: Input is in an invalid format.";
+        }
+        
         String secondOp = input.substring(input.indexOf(" ") + 3, input.length());
+        
         String retStr = null;
         int [] frac1 = fraction(firstOp);
+        if (frac1[1] == 0) {
+        	return "ERROR: Cannot divide by zero.";
+        }
         int [] frac2 = fraction(secondOp);
-
+        if (frac2[1] == 0) {
+        	return "ERROR: Cannot divide by zero.";
+        }
+        
         //if the operator is a plus sign
         if (Operator.equals("+")) {
             int den3 = frac1[1] * frac2[1];
