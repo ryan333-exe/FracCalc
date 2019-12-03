@@ -1,5 +1,4 @@
 package fracCalc;
-import java.sql.SQLOutput;
 import java.util.*;
 //Ryan Mathew  - last edited 10/11
 public class FracCalc {
