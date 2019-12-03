@@ -1,10 +1,10 @@
 package fracCalc;
+import java.sql.SQLOutput;
 import java.util.*;
 //Ryan Mathew  - last edited 10/11
 public class FracCalc {
 
     public static void main(String[] args) {
-        // TODO: Read the input from the user and call produceAnswer with an equation
         Scanner input = new Scanner(System.in);
         System.out.print("Enter an expression: ");
         String in = input.nextLine();
@@ -27,25 +27,51 @@ public class FracCalc {
     public static String produceAnswer(String input) {
         // produceAnswer should read the first operand (Ex.: 1/2) and return a float
         input = input.trim();
-        String firstOp = input.substring(0, (input.indexOf(" ")));
-        String Operator = input.substring(input.indexOf(" ") + 1, input.indexOf(" ") + 2);
-        
-        if (!(input.substring((input.indexOf(" ") + 2),(input.indexOf(" ") + 3))).equals(" ")) {
-        	return "ERROR: Input is in an invalid format.";
+
+        String firstOp;
+        String Operator;
+        String secondOp;
+
+        StringTokenizer str = new StringTokenizer(input);
+        if (str.hasMoreTokens()) {
+            firstOp = str.nextToken();
+        } else {
+            return "ERROR: Input is in an invalid format.";
         }
-        
-        String secondOp = input.substring(input.indexOf(" ") + 3, input.length());
-        
+
+        while (str.hasMoreTokens()) {
+            if (str.hasMoreTokens()) {
+                Operator = str.nextToken();
+                if (!Operator.equals("+") && !Operator.equals("-") && !Operator.equals("*") && !Operator.equals("/")) {
+                    return "ERROR: Input is in an invalid format.";
+                }
+            } else {
+                return "ERROR: Input is in an invalid format.";
+            }
+            if (str.hasMoreTokens()) {
+                secondOp = str.nextToken();
+            } else {
+                return "ERROR: Input is in an invalid format.";
+            }
+            firstOp = performOps(firstOp, Operator, secondOp);
+            if (firstOp.contains("ERROR")) {
+                return firstOp;
+            }
+        }
+        return firstOp;
+    }
+
+    public static String performOps(String firstOp, String Operator, String secondOp) {
         String retStr = null;
         int [] frac1 = fraction(firstOp);
         if (frac1[1] == 0) {
-        	return "ERROR: Cannot divide by zero.";
+            return "ERROR: Cannot divide by zero.";
         }
         int [] frac2 = fraction(secondOp);
         if (frac2[1] == 0) {
-        	return "ERROR: Cannot divide by zero.";
+            return "ERROR: Cannot divide by zero.";
         }
-        
+
         //if the operator is a plus sign
         if (Operator.equals("+")) {
             int den3 = frac1[1] * frac2[1];
@@ -97,10 +123,7 @@ public class FracCalc {
         }
 
         return retStr;
-        // TODO: Implement this function to produce the solution to the input
     }
-
-    // TODO: Fill in the space below with any helper methods that you think you will need
 
     public static int[] fraction(String input) {
         int wholeNum = 0;
